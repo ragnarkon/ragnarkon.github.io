@@ -1,0 +1,12 @@
+---
+layout: post
+title:  "It's a blog!"
+date:   2019-01-13 14:39:36 -0500
+categories: general
+---
+Hey look, it's a blog... running on [GitHub Pages](https://pages.github.com) and powered by [Jekyll](https://jekyllrb.com).
+
+The reason why this exists is because I am only given 20mb of drive space for my OneNote notebook, and I have (yet again) run out of space.
+The solution? Stop using OneNote and use Git instead.
+
+The vast majority of the notes I write in my notebook are "how-to" guides for myself to reference later, so why not share those with the general public? Seems like a smart idea to me.
