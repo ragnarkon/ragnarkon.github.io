@@ -106,7 +106,7 @@ analytics:
 author:
   name             : "Bryan Woolsey"
   avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
-  bio              : "Tech Engineer / DevOps guy"
+  bio              : "I do server config automation. Also eat burritos."
   location         : "Connecticut, USA"
   email            :
   links:
