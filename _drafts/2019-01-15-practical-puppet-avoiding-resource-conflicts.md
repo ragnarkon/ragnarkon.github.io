@@ -81,8 +81,8 @@ ensure_packages($my_pkgs)
 How and when resources & functions are evaluated during catalog compilation may impact the result of these functions. Puppet does not always evaluate classes and resources in the order in
 which they are defined within a manifest. This evaluation-order independence has the potential to change the outcome of these functions and may make it seem like they are... well... broken.
 
-Exactly how catalog compilation works gets into the nitty gritty of Puppet, and I won't pretend to completely understand how it works. Instead I will attempt to explain the issue as I
-understand it--feel free to yell at me if I get anything wrong.
+Exactly how catalog compilation works gets into the nitty gritty of Puppet, and I won't pretend to completely understand how it works. All I can do is attempt to explain the issue as I
+understand it. (Feel free to yell at me if I get anything wrong.)
 
 ```puppet
 # Evaluated first
@@ -96,7 +96,7 @@ ensure_resource('file', '/tmp/shared', {'ensure' => 'directory'})
 # This catalog will compile.
 ```
 In the example above, the catalog will compile successfully, as the `file` resource is evaluated before the `ensure_resource` function. However, if the evaluation order is flipped, the
-catalog will fail to compile, as the `ensure_resource` function already added the `file` resource to the catalog before the file resource declaration is evaluated.
+catalog will fail to compile, as the `ensure_resource` function already added the `File['/tmp/shared']` resource to the catalog before the `file` resource declaration is evaluated.
 
 ```puppet
 # Evaluated first
@@ -110,8 +110,8 @@ file { '/tmp/shared':
 # This catalog will fail
 ```
 
-Evaluation order can quickly become an issue when the same resources are added to the catalog in two completely different, unrelated classes. This evaluation order issue can
-largely be avoided by using these handy functions in all classes that define the resource, which may be a hindrance if your Puppet modules are developed by different people on different
-teams.
+Evaluation order can quickly become an issue when the same resources are added to the catalog in two completely different, unrelated classes. This issue can
+largely be avoided by using these handy functions in all classes that define the resource. However, there may some hindrances to push through if your Puppet modules are developed by
+different people on different teams.
 
-All that said, the best solution is to use roles, profiles, and class/resource relationships correct, and avoid these functions altogether. Easier said than done.
+All that said, the best solution is to use roles, profiles, and class/resource relationships correctly. As mentioned earlier, avoid these functions of possible, which may be easier said than done.
