@@ -1,5 +1,6 @@
 ---
 layout: single
+classes: wide
 title:  "Practical Puppet: Avoiding Resource Conflicts"
 date:   2019-01-16 20:25:00 -0500
 categories: puppet

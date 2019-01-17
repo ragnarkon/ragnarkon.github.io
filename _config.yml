@@ -11,7 +11,7 @@
 # https://mmistakes.github.io/minimal-mistakes/docs/quick-start-guide/#installing-the-theme
 
 # theme                  : "minimal-mistakes-jekyll"
-remote_theme           : "mmistakes/minimal-mistakes"
+remote_theme             : "mmistakes/minimal-mistakes"
 minimal_mistakes_skin    : "default" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise"
 
 # Site Settings
@@ -19,7 +19,7 @@ locale                   : "en-US"
 title                    : "Woose the Wise"
 title_separator          : "-"
 name                     : "Bryan Woolsey"
-description              : "A notebook in blog form."
+description              : "A notebook about Puppet in blog form."
 url                      : "https://bryanwoolsey.com"# the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : # the subpath of your site, e.g. "/blog"
 repository               : "ragnarkon/ragnarkon.github.io"# GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
@@ -105,7 +105,7 @@ analytics:
 # Site Author
 author:
   name             : "Bryan Woolsey"
-  avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
+  avatar           : "/assets/images/bio-photo.jpg"
   bio              : "I do server config automation. Also eat burritos."
   location         : "Connecticut, USA"
   email            :
@@ -128,6 +128,9 @@ author:
     - label: "Instagram"
       icon: "fab fa-fw fa-instagram"
       # url: "https://instagram.com/"
+    - label: "LinkedIn"
+      icon: "fab fa-fw fa-linkedin"
+      url: "https://www.linkedin.com/in/bryanwoolsey/"
 
 # Site Footer
 footer:
@@ -291,3 +294,10 @@ defaults:
       comments: # true
       share: # true
       related: true
+  # _pages
+  - scope:
+      path: ""
+      type: pages
+    values:
+      layout: single
+      author_profile: true
