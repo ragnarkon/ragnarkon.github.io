@@ -1,17 +1,20 @@
 ---
 layout: single
 title:  "Practical Puppet: Avoiding Resource Conflicts"
-date:   2019-01-15 19:55:00 -0500
+date:   2019-01-16 20:25:00 -0500
 categories: puppet
 ---
 
 One of the most common questions I get from coworkers new to Puppet is "how can I avoid resource conflicts?".
 
+The typical resource conflict I run across is usually caused by multiple modules attempting to manage a common folder or package dependency. (`C:\temp` in particular seems to be a big hit
+for some reason.) If multiple modules manage the same resource, Puppet will throw a duplicate resource declaration error.
+
 In an ideal world of [roles and profiles](https://puppet.com/docs/pe/2019.0/designing_system_configs_roles_and_profiles.html) and perfectly coded modules, resource conflicts should never
 occur. But, given that we don't live in an ideal world, there are a few helpful functions to avoid the issue.
 
-It is important to note that the functions listed below are still impacted by evaluation order (explained in greater detail later). These functions are not magic "fix all" functions, and
-should be avoided if at all possible.
+Before we move on, It is important to note that the functions listed below are still impacted by evaluation order (explained in greater detail later). These functions are not magic "fix all"
+functions, and should be avoided if at all possible.
 
 ### `defined`
 
@@ -35,6 +38,7 @@ resource with specific attributes.
 ```puppet
 if defined_with_params(User['johndoe'], {'ensure' => 'present'}) {
   # do stuff ...
+} else {
   user { 'johndoe':
     ensure => absent,
   }
@@ -91,8 +95,11 @@ file { '/tmp/shared':
 }
 
 # Evaluated second
-ensure_resource('file', '/tmp/shared', {'ensure' => 'directory'})
-
+unless defined(File['/tmp/shared']) {
+  file { '/tmp/shared':
+    ensure => 'directory',
+  }
+}
 # This catalog will compile.
 ```
 In the example above, the catalog will compile successfully, as the `file` resource is evaluated before the `ensure_resource` function. However, if the evaluation order is flipped, the
@@ -100,7 +107,11 @@ catalog will fail to compile, as the `ensure_resource` function already added th
 
 ```puppet
 # Evaluated first
-ensure_resource('file', '/tmp/shared', {'ensure' => 'directory'})
+unless defined(File['/tmp/shared']) {
+  file { '/tmp/shared':
+    ensure => 'directory',
+  }
+}
 
 # Evaluated second
 file { '/tmp/shared':
@@ -111,7 +122,5 @@ file { '/tmp/shared':
 ```
 
 Evaluation order can quickly become an issue when the same resources are added to the catalog in two completely different, unrelated classes. This issue can
-largely be avoided by using these handy functions in all classes that define the resource. However, there may some hindrances to push through if your Puppet modules are developed by
-different people on different teams.
-
-All that said, the best solution is to use roles, profiles, and class/resource relationships correctly. As mentioned earlier, avoid these functions of possible, which may be easier said than done.
+largely be avoided by using these handy functions in all classes that define the resource. That said, use some restriant to ensure these functions aren't used everywhere. If you
+have widespread use of these functions, chances are you aren't structuring your code base correctly.
