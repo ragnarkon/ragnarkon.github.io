@@ -106,7 +106,7 @@ analytics:
 author:
   name             : "Bryan Woolsey"
   avatar           : "/assets/images/bio-photo.jpg"
-  bio              : "I do server config automation. Also eat burritos."
+  bio              : "I do server configuration automation. Also eat burritos."
   location         : "Connecticut, USA"
   email            :
   links:
